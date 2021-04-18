@@ -22,7 +22,20 @@ AlphabetTrie::AlphabetTrie(std::string filepath){
     root = new TrieNode();
     
     std::ifstream fin;
-    fin.open(filepath, std::ios::in);
+    
+    try
+    {
+        fin.open(filepath, std::ios::in);
+        if(!fin.is_open()){   
+            std::cerr << "\nERROR : Invalid filepath (Check input filepath for AlphabetTrie)\n" << '\n';
+            throw filepath;
+        }
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    
     
     std::string word;
     TrieNode* curr;
