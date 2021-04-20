@@ -15,10 +15,11 @@ int main(){
     // new_list.merge_sort();
     // new_list.dump();
 
-    AlphabetTrie trie("wordlist_10000.txt");
+    AlphabetTrie trie;
     trie.insert("guntasbruh");
-    trie.insert("bruh");
-    trie.remove("bruh");
+    trie.insert("guntas");
+    trie.remove("guntas");
+    trie.dump_trie_structure();
     
     string word;
 begin:
