@@ -35,20 +35,24 @@ public:
 
     void remove(std::string word);
 
-    TrieNode* remove_util(TrieNode* root, std::string word);
-
     bool contains(std::string word);
     
     void delete_subtrie(TrieNode* arg_root);
 
-    void dump_trie_words();
+    void dump_trie_words(std::ofstream* fout = nullptr);
 
     void dump_trie_structure(std::ofstream* fout = nullptr);
 
-    void dump_trie_structure_util(TrieNode* root, char label, std::ofstream* fout, unsigned long long parent_id);
-
+    
 private:
     static unsigned long long node_id;
 
     TrieNode* root;
+
+    TrieNode* remove_util(TrieNode* root, std::string word);
+
+    void dump_trie_words_util(TrieNode* root, std::ofstream* fout, std::string word);
+
+    void dump_trie_structure_util(TrieNode* root, char label, std::ofstream* fout, unsigned long long parent_id);
+
 };

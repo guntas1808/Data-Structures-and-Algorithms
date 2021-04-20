@@ -87,28 +87,28 @@ void AlphabetTrie::remove(std::string word){
         root = new TrieNode;
 }
 
-TrieNode* AlphabetTrie::remove_util(TrieNode* root, std::string word){
-    if(root==NULL)
+TrieNode* AlphabetTrie::remove_util(TrieNode* arg_root, std::string word){
+    if(arg_root==NULL)
         return NULL;
     
     if(word == ""){
-        root->present=false;
+        arg_root->present=false;
         for(char c='a'; c<='z'; ++c){
-            if(root->at(c))
-                return root;
+            if(arg_root->at(c))
+                return arg_root;
         }
-        delete root;
+        delete arg_root;
         return NULL;
     }
 
-    root->child[word[0]-'a'] =  remove_util(root->at(word[0]), word.substr(1));
+    arg_root->child[word[0]-'a'] =  remove_util(arg_root->at(word[0]), word.substr(1));
     
     for(char c='a'; c<='z'; ++c){
-        if(root->at(c))
-            return root;
+        if(arg_root->at(c))
+            return arg_root;
     }
     
-    delete root;
+    delete arg_root;
     return NULL;
 }
 
@@ -121,37 +121,56 @@ bool AlphabetTrie::contains(std::string word){
     }
     if(curr->present)
         return true;
+    
     return false;
+}
+
+void AlphabetTrie::dump_trie_words(std::ofstream* fout){
+    if(fout==nullptr){
+        fout = new std::ofstream;
+        fout->open("trie_words_dump.txt", std::ios::out);
+    }
+    dump_trie_words_util(root, fout, "");
+    return;
+}
+
+void AlphabetTrie::dump_trie_words_util(TrieNode* arg_root, std::ofstream* fout, std::string word){
+    if(arg_root == nullptr)
+        return;
+
+    if(arg_root->present)
+        (*fout)<<word<<std::endl;
+    
+    for(char c='a'; c<='z'; ++c)
+        dump_trie_words_util(arg_root->at(c), fout, word + c);
+    
+    return;
 }
 
 void AlphabetTrie::dump_trie_structure(std::ofstream* fout){
     if(fout==nullptr){
         fout = new std::ofstream;
-        fout->open("trie_dump_1.dot", std::ios::out);
+        fout->open("trie_dump.dot", std::ios::out);
     }
     (*fout)<<"digraph G {"<<std::endl;
     (*fout)<<"    0 [label = \"ROOT\"];"<<std::endl;
     
-    for(char c='a'; c<='z'; ++c){
-        if(root->at(c)){
-            dump_trie_structure_util(root->at(c), c, fout, 0);
-        }
-    }
+    for(char c='a'; c<='z'; ++c)
+        dump_trie_structure_util(root->at(c), c, fout, 0);
+
     (*fout)<<"}"<<std::endl;
 }
 
-void AlphabetTrie::dump_trie_structure_util(TrieNode* root, char label, std::ofstream* fout, unsigned long long parent_id){
-    if(root==NULL)
+void AlphabetTrie::dump_trie_structure_util(TrieNode* arg_root, char label, std::ofstream* fout, unsigned long long parent_id){
+    if(arg_root==NULL)
         return;
     
     unsigned long long my_id = node_id++;
     
-    (*fout)<<"    "<<my_id<<" [label = \""<<label<<" , "<<root->present<<"\"];"<<std::endl;
+    (*fout)<<"    "<<my_id<<" [label = \""<<label<<" , "<<arg_root->present<<"\"];"<<std::endl;
     (*fout)<<"    "<<parent_id<<" -> "<<my_id<<";"<<std::endl;
     
-    for(char c='a'; c<='z'; ++c){
-        if(root->at(c)){
-            dump_trie_structure_util(root->at(c), c, fout, my_id);
-        }
-    }
+    for(char c='a'; c<='z'; ++c)
+        dump_trie_structure_util(arg_root->at(c), c, fout, my_id);
+
 }
