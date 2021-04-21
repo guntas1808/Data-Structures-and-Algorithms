@@ -18,6 +18,8 @@ public:
     LinkedList(int input[], int size);
 
     LinkedList(std::vector<int>& vec);
+
+    LinkedList(const LinkedList& arg_list);
     
     ~LinkedList();
 
@@ -26,16 +28,24 @@ public:
     LLNode* tail();
 
     int size();
+
+    bool find(int val);
     
     bool insert(int val, int pos=0);
 
     bool append(int val);
 
+    void rotate(int n);
+
+    void reverse();
+
+    void reverse_in_groups(int n);
+
     void merge_sort();
 
     void dump();
 
-private:
+// private:
     LLNode* head_ptr;
     LLNode* tail_ptr;
     int size_val;

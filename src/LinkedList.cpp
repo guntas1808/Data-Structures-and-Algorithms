@@ -36,6 +36,22 @@ LinkedList::LinkedList(std::vector<int>& vec){
     size_val = vec.size();
 }
 
+LinkedList::LinkedList(const LinkedList& arg_list){
+    size_val = arg_list.size_val;
+    if(size_val==0)
+        return;
+    
+    head_ptr = tail_ptr = new LLNode(arg_list.head_ptr->value);
+    LLNode* curr = arg_list.head_ptr->next;
+    while (curr){
+        tail_ptr->next = new LLNode(curr->value);
+        tail_ptr = tail_ptr->next;
+        
+        curr = curr->next;
+    }
+    
+}
+
 LinkedList::~LinkedList(){
     LLNode* curr = head_ptr;
     while (head_ptr){
@@ -56,6 +72,18 @@ LLNode* LinkedList::tail(){
 
 int LinkedList::size(){
     return size_val;
+}
+
+bool LinkedList::find(int val){
+    LLNode* curr = head_ptr;
+
+    while (curr){
+        if(curr->value == val)
+            return true;
+        curr = curr->next;
+    }
+    
+    return false;
 }
 
 bool LinkedList::insert(int val, int pos){
@@ -100,6 +128,79 @@ bool LinkedList::append(int val){
     ++size_val;
     return true;
 }
+
+void LinkedList::rotate(int n){
+    if(n%size_val==0){
+        return;
+    }
+    if(n<0){
+        std::cerr<<"ROATATE ERROR: invalid argument for rotation"<<std::endl;
+        return;
+    }
+    n %= size_val; 
+    LLNode* curr = head_ptr;
+    LLNode* prev = tail_ptr;
+    
+    for(int i=0; i<n; ++i){
+        prev = curr;
+        curr = curr->next;
+    }
+
+    prev->next = nullptr;
+    tail_ptr->next = head_ptr;
+    head_ptr = curr;
+    tail_ptr = prev;
+    
+    return;
+}
+
+void LinkedList::reverse(){
+    if(size_val<=1)
+        return;
+    
+    LLNode* prev = nullptr;
+    LLNode* curr = head_ptr;
+    LLNode* nxt = head_ptr->next;
+    while (nxt){
+        curr->next = prev;
+        prev = curr;
+        curr = nxt;
+        nxt = nxt->next;
+    }
+    curr->next = prev;
+
+    tail_ptr = head_ptr;
+    head_ptr  = curr;
+    
+    return;
+}
+
+// void LinkedList::reverse_in_groups(int n){
+//     if(size_val<=1 || n==1)
+//         return;
+//     if(n >= size_val)
+//         return reverse();
+
+//     LLNode* prev = nullptr;
+//     LLNode* curr = head_ptr;
+//     LLNode* nxt = head_ptr->next;
+    
+    
+//     while (nxt){
+//         for(int i=0; i<n; ++i){
+//             curr->next = prev;
+//             prev = curr;
+//             curr = nxt;
+//             nxt = nxt->next;
+//         }
+//     }
+//     curr->next = prev;
+
+//     tail_ptr = head_ptr;
+//     head_ptr  = curr;
+    
+//     return;
+// }
 
 void LinkedList::merge(LLNode* start, LLNode* mid, LLNode* end){
     LinkedList temp_ll;
@@ -161,9 +262,9 @@ void LinkedList::merge_sort(){
 
 void LinkedList::dump(){
     LLNode* curr = head_ptr;
-    std::cout<<"=============================="<<std::endl;
+    std::cout<<"\n=============================="<<std::endl;
     std::cout<<"=======LINKED LIST DUMP======="<<std::endl;
-    std::cout<<"=============================="<<std::endl;
+    std::cout<<"==============================\n"<<std::endl;
     std::cout<<"HEAD--";
     while (curr){
         if(curr==tail_ptr){
@@ -174,5 +275,5 @@ void LinkedList::dump(){
             curr = curr->next;
         }
     }
-    std::cout<<"=============================="<<std::endl;
+    std::cout<<"\n==============================\n"<<std::endl;
 }
