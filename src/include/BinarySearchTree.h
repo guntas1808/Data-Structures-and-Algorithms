@@ -28,6 +28,8 @@ public:
 
     void remove(int k);
 
+    bool search(int k);
+
     void in_order(std::vector<int>& vec);
 
     void pre_order(std::vector<int>& vec);

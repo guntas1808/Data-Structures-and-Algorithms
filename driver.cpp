@@ -68,12 +68,12 @@ int main(){
     cout<<endl;
     vec.clear();
     
-    // B.post_order(vec);
-    // cout<<"POSTORDER---\n";
-    // for(auto n : vec)
-    //     cout<<" "<<n;
-    // cout<<endl;
-    // vec.clear();
+    B.post_order(vec);
+    cout<<"POSTORDER---\n";
+    for(auto n : vec)
+        cout<<" "<<n;
+    cout<<endl;
+    vec.clear();
     
     B.dump();
     return 0;

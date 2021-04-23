@@ -55,26 +55,61 @@ void BinarySearchTree::insert(int k){
 }
 
 void BinarySearchTree::remove(int k){
+    // BinaryTreeNode* curr = root;
+    // BinaryTreeNode* pred = curr;
+    
+    // while (curr){
+    //     if(curr->value > k){
+    //         pred = curr;
+    //         curr = curr->left;
+    //     }else if(curr->value < k){
+    //         pred = curr;
+    //         curr = curr->right;
+    //     }else{
+    //         if(curr->left && curr->right){
+                
+    //         }else if(curr->right){
+                
+    //         }else if(curr->left){
+                
+    //         }else{}
+    //     }
+    // }
+}
 
+bool BinarySearchTree::search(int k){
+    BinaryTreeNode* curr = root;
+    
+    while (curr){
+        if(curr->value > k){
+            curr = curr->left;
+        }else if(curr->value < k){
+            curr = curr->right;
+        }else{
+            return true;
+        }
+    }
+    return false;
 }
 
 void BinarySearchTree::in_order(std::vector<int>& vec){
     if(root==nullptr)
         return;
     
+    vec.clear();
     std::stack<BinaryTreeNode*> st;
-    // std::stack<int> stval;
     BinaryTreeNode* curr = root;
 
     while (true){
-        // printstack(stval);
+
         if(curr->left){
             st.push(curr);
-            // stval.push(curr->value);
             curr = curr->left;
+        
         }else if(curr->right){
             vec.push_back(curr->value);
             curr = curr->right;
+        
         }else{
             vec.push_back(curr->value);
             
@@ -82,7 +117,6 @@ void BinarySearchTree::in_order(std::vector<int>& vec){
                 curr = st.top();
                 vec.push_back(curr->value);
                 st.pop();
-                // stval.pop();
             }
             
             if(st.empty())
@@ -92,54 +126,98 @@ void BinarySearchTree::in_order(std::vector<int>& vec){
             vec.push_back(curr->value);
             
             curr = curr->right;
-            // stval.pop();
             st.pop();
         }
-        // printstack(stval);
-        
-        // for(int n: vec)
-        //     std::cout<<" "<<n;
-
-        // std::cout<<"   CURR = "<<curr->value<<std::endl;
-        // std::cout<<std::endl;
-        
     }
 }
 
 void BinarySearchTree::pre_order(std::vector<int>& vec){
-    std::stack<BinaryTreeNode*> st;
-    // std::stack<int> stval;
+    if(root==nullptr)
+        return;
     
+    vec.clear();
+    std::stack<BinaryTreeNode*> st;
     BinaryTreeNode* curr = root;
 
     while (true){
-        // printstack(stval);
 
         vec.push_back(curr->value);
         if(curr->left && curr->right){
             st.push(curr->right);
-            // stval.push(curr->right->value);
-            
             curr = curr->left;
+
         }else if(curr->right){
             curr = curr->right;
+        
+        }else if(curr->left){
+            curr = curr->left;
+        
         }else{
             if(st.empty())
                 break;
             
             curr = st.top();
             st.pop();
-            // stval.pop();
         }
     }
 }
 
 void BinarySearchTree::post_order(std::vector<int>& vec){
+    if(root==nullptr)
+        return;
+    
+    vec.clear();
+    std::stack<BinaryTreeNode*> st;
+    BinaryTreeNode* curr = root;
 
+    while (true){
+        if(curr->left && curr->right){
+            st.push(curr->right);
+            st.push(curr);
+            curr = curr->left;
 
+        }else if(curr->right){
+            st.push(curr);
+            curr = curr->right;
+        
+        }else if(curr->left){
+            st.push(curr);
+            curr = curr->left;
+        
+        }else{
+            vec.push_back(curr->value);
+
+            BinaryTreeNode* temp = st.top();
+            st.pop();
+            if(st.top()==temp->right){
+                curr  = st.top();
+                st.pop();
+                st.push(temp);
+            }else{
+                while(!st.empty() && st.top()!=temp->right){
+                    vec.push_back(temp->value);
+                    temp = st.top();
+                    st.pop();
+                }
+                
+                if(st.empty()){
+                    vec.push_back(temp->value);
+                    break;
+                }
+
+                curr  = st.top();
+                st.pop();
+                st.push(temp);
+            }
+        }
+    }
 }
 
 void BinarySearchTree::level_order(std::vector<int>& vec){
+    if(root==nullptr)
+        return;
+    
+    vec.clear();
     std::queue<BinaryTreeNode* > q;
     q.push(root);
     while (!q.empty()){
