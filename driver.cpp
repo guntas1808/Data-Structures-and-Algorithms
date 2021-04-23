@@ -1,22 +1,24 @@
 #include <iostream>
 #include "src/include/LinkedList.h"
 #include "src/include/AlphabetTrie.h"
+#include "src/include/BinarySearchTree.h"
 
 using namespace std;
 
+
 int main(){
-    /*Linked List driver code*/
+    // /*Linked List driver code*/
     
-    vector<int> vec1 = {10, 2, 54, 5, 7, 2, 0, 43};
-    vector<int> vec2 = {15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
-    // LinkedList list1(vec1);
-    LinkedList list2(vec2);
+    // vector<int> vec1 = {10, 2, 54, 5, 7, 2, 0, 43};
+    // vector<int> vec2 = {15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+    // // LinkedList list1(vec1);
+    // LinkedList list2(vec2);
+    // // list1.dump();
+    // LinkedList list1 = list2;
     // list1.dump();
-    LinkedList list1 = list2;
-    list1.dump();
-    list2.reverse();
-    list1.dump();
-    list2.dump();
+    // list2.reverse();
+    // list1.dump();
+    // list2.dump();
 
     // cout<<new_list.size()<<endl;
     // new_list.dump();
@@ -38,5 +40,41 @@ int main(){
 //     cin>>word;
 //     cout<<trie.contains(word)<<endl;
 //     goto begin;
+
+    BinarySearchTree B;
+    vector<int> inp = {25, 15, 10, 4, 12, 22, 18, 24, 50, 35, 31, 44, 70, 66, 90};
+    vector<int> vec;
+    for(auto n : inp)
+        B.insert(n);
+    
+    B.level_order(vec);
+    cout<<"LEVELORDER---\n";
+    for(auto n : vec)
+        cout<<" "<<n;
+    cout<<endl;
+    vec.clear();
+    
+    B.in_order(vec);
+    cout<<"INORDER---\n";
+    for(auto n : vec)
+        cout<<" "<<n;
+    cout<<endl;
+    vec.clear();
+    
+    B.pre_order(vec);
+    cout<<"PREORDER---\n";
+    for(auto n : vec)
+        cout<<" "<<n;
+    cout<<endl;
+    vec.clear();
+    
+    // B.post_order(vec);
+    // cout<<"POSTORDER---\n";
+    // for(auto n : vec)
+    //     cout<<" "<<n;
+    // cout<<endl;
+    // vec.clear();
+    
+    B.dump();
     return 0;
 }
