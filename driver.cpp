@@ -74,7 +74,13 @@ int main(){
         cout<<" "<<n;
     cout<<endl;
     vec.clear();
-    
+    B.dump("full.dot");
+    B.remove(70);
+    B.remove(66);
+    B.remove(90);
+    B.remove(50);
+
+    // B.remove(50);
     B.dump();
     return 0;
 }

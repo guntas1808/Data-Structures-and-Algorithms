@@ -22,6 +22,7 @@ class BinarySearchTree{
 
 public:
     BinarySearchTree();
+    
     ~BinarySearchTree();
 
     void insert(int k);
@@ -38,9 +39,9 @@ public:
     
     void level_order(std::vector<int>& vec);
 
-    void dump(std::ofstream* fout=nullptr);
+    void dump(std::string filepath);
 
-    void printstack(std::stack<int>& st);
+    void dump(std::ofstream* fout=nullptr);
 private:
     BinaryTreeNode* root;
 

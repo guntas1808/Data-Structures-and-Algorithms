@@ -55,26 +55,76 @@ void BinarySearchTree::insert(int k){
 }
 
 void BinarySearchTree::remove(int k){
-    // BinaryTreeNode* curr = root;
-    // BinaryTreeNode* pred = curr;
+    BinaryTreeNode* curr = root;
+    BinaryTreeNode* pred = curr;
+    bool is_right = false;
     
-    // while (curr){
-    //     if(curr->value > k){
-    //         pred = curr;
-    //         curr = curr->left;
-    //     }else if(curr->value < k){
-    //         pred = curr;
-    //         curr = curr->right;
-    //     }else{
-    //         if(curr->left && curr->right){
+    while (curr){
+        if(curr->value > k){
+            pred = curr;
+            curr = curr->left;
+            is_right = false;
+        }else if(curr->value < k) {
+            pred = curr;
+            curr = curr->right;
+            is_right = true;
+        }else{
+            break;
+        }
+    }
+
+    if(curr == nullptr)
+        return;
+    if(curr->right && curr->left){
+        BinaryTreeNode* temp = curr->right;
+        
+        if(temp->left == nullptr){
+            
+            if(is_right)
+                pred->right = temp;
+            else
+                pred->left = temp;
+            temp->left = curr->left;
+            
+            delete curr;
+        }else{
+            BinaryTreeNode* temp_pred;
+            std::cout<<"hello "<<temp->left<<std::endl;
                 
-    //         }else if(curr->right){
-                
-    //         }else if(curr->left){
-                
-    //         }else{}
-    //     }
-    // }
+            while (temp->left){
+                temp_pred = temp;
+                temp = temp->left;
+            }
+            
+            temp_pred->left = temp->right;
+            temp->right = curr->right;
+            temp->left = curr->left;
+            
+            if(is_right)
+                pred->right = temp;
+            else
+                pred->left = temp;
+            
+            delete curr;
+        }
+
+    }else if(curr->right){
+        if(is_right)
+            pred->right = curr->right;
+        else
+            pred->left = curr->right;
+        
+        delete curr;
+
+    }else{
+        if(is_right)
+            pred->right = curr->left;
+        else
+            pred->left = curr->left;
+
+        delete curr;
+
+    }      
 }
 
 bool BinarySearchTree::search(int k){
@@ -238,10 +288,23 @@ void BinarySearchTree::level_order(std::vector<int>& vec){
     }
 }
 
-void BinarySearchTree::dump(std::ofstream* fout){
-    if(root==nullptr)
+void BinarySearchTree::dump(std::string filepath){
+    if(root==nullptr){
+        std::cout<<"EMPTY TREE"<<std::endl;
         return;
+    }
     
+    std::ofstream* fout = new std::ofstream;
+    fout->open(filepath, std::ios::out);
+    
+    return dump(fout);
+}
+
+void BinarySearchTree::dump(std::ofstream* fout){
+    if(root==nullptr){
+        std::cout<<"EMPTY TREE"<<std::endl;
+        return;
+    }
     if(fout==nullptr){
         fout = new std::ofstream;
         fout->open("binary_tree_dump.dot", std::ios::out);
@@ -272,22 +335,4 @@ void BinarySearchTree::dump(std::ofstream* fout){
     }
 
     (*fout)<<"}"<<std::endl;
-}
-
-void BinarySearchTree::printstack(std::stack<int>& st){
-    std::stack<int> temp;
-    std::cout<<"------";
-    while (!st.empty())
-    {
-        temp.push(st.top());
-        st.pop();
-    }
-    
-    while (!temp.empty())
-    {
-        st.push(temp.top());
-        std::cout<<" "<<temp.top();
-        temp.pop();
-    }
-    std::cout<<std::endl;
 }
