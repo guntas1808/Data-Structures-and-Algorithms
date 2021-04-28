@@ -2,6 +2,7 @@
 #include "src/include/LinkedList.h"
 #include "src/include/AlphabetTrie.h"
 #include "src/include/BinarySearchTree.h"
+#include "src/include/ArrayAlgorithms.h"
 
 using namespace std;
 
@@ -41,46 +42,62 @@ int main(){
 //     cout<<trie.contains(word)<<endl;
 //     goto begin;
 
-    BinarySearchTree B;
-    vector<int> inp = {25, 15, 10, 4, 12, 22, 18, 24, 50, 35, 31, 44, 70, 66, 90};
-    vector<int> vec;
-    for(auto n : inp)
-        B.insert(n);
-    
-    B.level_order(vec);
-    cout<<"LEVELORDER---\n";
-    for(auto n : vec)
-        cout<<" "<<n;
-    cout<<endl;
-    vec.clear();
-    
-    B.in_order(vec);
-    cout<<"INORDER---\n";
-    for(auto n : vec)
-        cout<<" "<<n;
-    cout<<endl;
-    vec.clear();
-    
-    B.pre_order(vec);
-    cout<<"PREORDER---\n";
-    for(auto n : vec)
-        cout<<" "<<n;
-    cout<<endl;
-    vec.clear();
-    
-    B.post_order(vec);
-    cout<<"POSTORDER---\n";
-    for(auto n : vec)
-        cout<<" "<<n;
-    cout<<endl;
-    vec.clear();
-    B.dump("full.dot");
-    B.remove(70);
-    B.remove(66);
-    B.remove(90);
-    B.remove(50);
 
+    // /*Binary Tree driver code*/
+    // BinarySearchTree B;
+    // vector<int> inp = {25, 15, 10, 4, 12, 22, 18, 24, 50, 35, 31, 44, 70, 66, 90};
+    // vector<int> vec;
+    // for(auto n : inp)
+    //     B.insert(n);
+    
+    // B.level_order(vec);
+    // cout<<"LEVELORDER---\n";
+    // for(auto n : vec)
+    //     cout<<" "<<n;
+    // cout<<endl;
+    // vec.clear();
+    
+    // B.in_order(vec);
+    // cout<<"INORDER---\n";
+    // for(auto n : vec)
+    //     cout<<" "<<n;
+    // cout<<endl;
+    // vec.clear();
+    
+    // B.pre_order(vec);
+    // cout<<"PREORDER---\n";
+    // for(auto n : vec)
+    //     cout<<" "<<n;
+    // cout<<endl;
+    // vec.clear();
+    
+    // B.post_order(vec);
+    // cout<<"POSTORDER---\n";
+    // for(auto n : vec)
+    //     cout<<" "<<n;
+    // cout<<endl;
+    // vec.clear();
+    // B.dump("full.dot");
+    // B.remove(70);
+    // B.remove(66);
+    // B.remove(90);
     // B.remove(50);
-    B.dump();
+
+    // // B.remove(50);
+    // B.dump();
+
+
+    /*Array driver code*/
+    vector<int>vec = {145, 93};
+    for(auto i:vec)
+        cout<<" "<<i;
+    cout<<endl;
+
+    merge_sort(vec);
+
+    for(auto i:vec)
+        cout<<" "<<i;
+    cout<<endl;
+
     return 0;
 }
