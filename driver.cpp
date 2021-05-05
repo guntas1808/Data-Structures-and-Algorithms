@@ -3,9 +3,9 @@
 #include "src/include/AlphabetTrie.h"
 #include "src/include/BinarySearchTree.h"
 #include "src/include/ArrayAlgorithms.h"
+#include "src/include/Graph.h"
 
 using namespace std;
-
 
 int main(){
     // /*Linked List driver code*/
@@ -87,17 +87,28 @@ int main(){
     // B.dump();
 
 
-    /*Array driver code*/
-    vector<int>vec = {145, 93};
-    for(auto i:vec)
-        cout<<" "<<i;
-    cout<<endl;
+    // /*Array driver code*/
+    // vector<int>vec = {800, 9 ,1, -100000, 400, 11, 3, 3, 24, 24, 32};
+    // for(auto i:vec)
+    //     cout<<" "<<i;
+    // cout<<endl;
 
-    merge_sort(vec);
+    // // merge_sort(vec);
 
-    for(auto i:vec)
-        cout<<" "<<i;
-    cout<<endl;
+    // auto p = largest_sum_contiguous_subarray(vec);
+
+    // cout<< p.first << " " << p.second.first << " " << p.second.first <<endl;
+    // // for(auto i:vec)
+    // //     cout<<" "<<i;
+    // // cout<<endl;
+
+    /*Graph driver code*/
+    Graph G = generate_graph(5, 5, true, false);
+    // G.add_edge(1,2);
+    // G.add_edge(2,5);
+    // G.add_edge(5,1);
+    // G.add_edge(5,3);
+    G.dump();
 
     return 0;
 }
