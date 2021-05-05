@@ -1,5 +1,7 @@
 #include <vector>
 #include <string>
+#include <queue>
+#include <iostream>
 #include <fstream>
 
 struct RedBlackNode{
@@ -28,10 +30,6 @@ public:
     
     ~RedBlackTree();
 
-    void left_rotate(RedBlackNode* arg_node);
-
-    void right_rotate(RedBlackNode* arg_node);
-
     void insert(int k);
 
     void remove(int k);
@@ -50,4 +48,12 @@ public:
 
 private:
     RedBlackNode* root;
+
+    void left_rotate(RedBlackNode* arg_node);
+
+    void right_rotate(RedBlackNode* arg_node);
+
+    void fix_insert();
+    
+    void fix_remove();
 };
