@@ -21,4 +21,4 @@ $(SRC)/Graph.o : $(SRC)/Graph.cpp $(SRC)/$(INC)/Graph.h
 	$(CC) -c $(SRC)/Graph.cpp -o $(SRC)/Graph.o
 
 clean:
-	rm -f $(SRC)/*.o driver *.o
+	rm -f $(SRC)/*.o driver *.o *.dot *.txt *.pdf

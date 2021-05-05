@@ -103,12 +103,13 @@ int main(){
     // // cout<<endl;
 
     /*Graph driver code*/
-    Graph G = generate_graph(5, 5, true, false);
+    Graph G = generate_graph(100, 100);
     // G.add_edge(1,2);
     // G.add_edge(2,5);
     // G.add_edge(5,1);
     // G.add_edge(5,3);
     G.dump();
-
+    cout<<G.has_cycle()<<endl;
+    
     return 0;
 }

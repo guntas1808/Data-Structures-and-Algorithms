@@ -72,6 +72,9 @@ bool Graph::add_node(int n){
 }
 
 bool Graph::has_cycle_util(int u,std::vector<bool>& visited, std::vector<bool>& visiting){
+    if(VERBOSE)
+        std::cout<<"has_cycle_util( "<< u <<" )"<<std::endl;
+    
     if(visited[u])
         return false;
     if(visiting[u])
@@ -83,6 +86,7 @@ bool Graph::has_cycle_util(int u,std::vector<bool>& visited, std::vector<bool>& 
     while (node){
         if(has_cycle_util(node->vertex, visited, visiting))
             return true;
+        node = node->next;
     }
 
     visiting[u] = false;
