@@ -103,7 +103,7 @@ int main(){
     // // cout<<endl;
 
     /*Graph driver code*/
-    Graph G = generate_graph(100, 100);
+    Graph G = generate_graph(7, 6);
     // G.add_edge(1,2);
     // G.add_edge(2,5);
     // G.add_edge(5,1);

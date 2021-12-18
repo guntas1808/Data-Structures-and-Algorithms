@@ -3,17 +3,14 @@
 
 struct AdjListNode{
 
-    AdjListNode(int u):
+    AdjListNode(int u, int weight = 1, AdjListNode* ptr = nullptr):
         vertex(u),
-        next(nullptr)
-        {}
-
-    AdjListNode(int u, AdjListNode* ptr):
-        vertex(u),
+        weight(weight),
         next(ptr)
         {}
 
     int vertex;
+    int weight;
     struct AdjListNode* next;
 }typedef AdjListNode;
 
@@ -35,17 +32,20 @@ public:
      * (Directed from u to v in case of a directed graph)
      * @param u
      * @param v 
+     * @param weight weight of the edge, default 1
     */
-    bool add_edge(int u, int v);
+    bool add_edge(int u, int v, int weight = 1);
 
     /**
      * Add new nodes to the graph
      * @param n number of nodes to add to the graph 
+     * @return true on successful adddition, false otherwise
     */
     bool add_node(int n);
     
     /**
      * Checks for a cycle in the graph using DFS traversal 
+     * @return true if a cycle detected, false otherwise
     */
     bool has_cycle();
 
@@ -63,7 +63,7 @@ private:
     /**
      * Helper method for add_edge
     */
-    bool add_edge_util(int u, int v);
+    bool add_edge_util(int u, int v, int weight);
 
     /**
      * Helper method for has_cycle
@@ -82,4 +82,4 @@ private:
  * @return reference to the Graph object (allocated on heap memory)
  * @note the returned object is allocated on the heap not on the stack
 */
-Graph& generate_graph(int vertex_count,int edge_count, bool has_self_edge = false, bool is_directed = true);
+Graph& generate_graph(int vertex_count,int edge_count, bool is_directed = true, std::vector<int> weight_params = {1,1}, bool has_self_edge = false);

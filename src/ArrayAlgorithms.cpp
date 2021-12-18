@@ -1,6 +1,17 @@
 #include "include/ArrayAlgorithms.h"
 #include <iostream>
 
+std::vector<int>& generate_array(int size){
+    std::vector<int> vec(size);
+
+    srand(time(0));
+
+    for(int i=0; i<size; ++i){
+        vec[i] = rand();
+    }
+    return vec;
+}
+
 void merge(std::vector<int>& vec, int start, int mid, int end){
     int ptr1 = start;
     int ptr2 = mid+1;
@@ -98,23 +109,24 @@ void quick_sort(std::vector<int>& vec){
  * @param k key to search for in the vector
  * @param is_inc true if the vector is sorted in increasing order
  */
-bool binary_search(std::vector<int>& vec, int k, bool is_inc){
+int binary_search(std::vector<int>& vec, int k, bool is_inc){
     if(vec.size()==0)
-        return false;
+        return -1;
+    
     int start = 0;
     int end = vec.size()-1;
     int mid;
 
-    while (start<=end){
+    while (start <= end){
         int mid = (start+end)/2;
         if(vec[mid]==k)
-            return true;
+            return mid;
         else if(((vec[mid] < k) && is_inc) || ((vec[mid] > k) && !is_inc))
             start = mid+1;
         else
             end = mid-1;
     }
-    return false;
+    return -1;
 }
 
 /**

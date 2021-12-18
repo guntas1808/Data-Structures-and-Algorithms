@@ -27,7 +27,7 @@ Graph::~Graph(){
     }
 }
 
-bool Graph::add_edge_util(int u, int v){
+bool Graph::add_edge_util(int u, int v, int weight){
     AdjListNode* node = adjacency_list[u];
     AdjListNode* prev = node;
     while (node){
@@ -43,24 +43,24 @@ bool Graph::add_edge_util(int u, int v){
         if(prev){
             if(VERBOSE)
                 std::cout << "Edge added "<<u<<" -> "<<v<<std::endl;
-            prev->next = new AdjListNode(v);
+            prev->next = new AdjListNode(v, weight);
         }else{
             if(VERBOSE)
                 std::cout << "Edge added "<<u<<" -> "<<v<<std::endl;
-            adjacency_list[u] = new AdjListNode(v);
+            adjacency_list[u] = new AdjListNode(v, weight);
         }
     }
     return true;
 }
 
-bool Graph::add_edge(int u, int v){
+bool Graph::add_edge(int u, int v, int weight){
     if(u>=vertex_count || v>=vertex_count)
         return false;
 
-    bool status = add_edge_util(u, v);
+    bool status = add_edge_util(u, v, weight);
 
     if(!is_directed && u!=v)
-        return (status && add_edge_util(v, u));
+        return (status && add_edge_util(v, u, weight));
     
     return status;
 }
@@ -122,9 +122,9 @@ void Graph::dump(std::string filepath){
         
         while (node){
             if(is_directed)
-                fout<< "\t" << u << " -> " << node->vertex << " ;" <<std::endl;
+                fout<< "\t" << u << " -> " << node->vertex << "[ label = " << node->weight <<"] ;" <<std::endl;
             else
-                fout<< "\t" << u << " -- " << node->vertex << " ;" <<std::endl;
+                fout<< "\t" << u << " -- " << node->vertex << "[ label = " << node->weight <<"] ;" <<std::endl;
             
             node = node->next;
         }
@@ -134,7 +134,7 @@ void Graph::dump(std::string filepath){
 
 }
 
-Graph& generate_graph(int vertex_count,int edge_count, bool has_self_edge, bool is_directed){
+Graph& generate_graph(int vertex_count,int edge_count, bool is_directed, std::vector<int> weight_params, bool has_self_edge){
     Graph* G = new Graph(vertex_count, is_directed);
     
     std::vector<std::pair<int, int>> edges;
@@ -151,14 +151,16 @@ Graph& generate_graph(int vertex_count,int edge_count, bool has_self_edge, bool 
             edges.push_back(std::make_pair(u, u));
         
     srand(time(0));
+    int w_range = weight_params[1]-weight_params[0]+1;
     
     for(int i=0; i< edge_count; ++i){
         if(edges.size()==0)
             break;
             
         int e = rand()%edges.size();
+        int w = rand()%(w_range) + weight_params[0];
         
-        G->add_edge(edges[e].first, edges[e].second);
+        G->add_edge(edges[e].first, edges[e].second, w);
         edges.erase(edges.begin()+e);
     }
 
